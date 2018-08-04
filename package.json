@@ -1,0 +1,24 @@
+{
+  "name": "subscription_manager",
+  "version": "1.0.0",
+  "description": "A subscription manager web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "concurrently --kill-others \"cd api & npm run start-dev\" \"cd client & npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelchi1997/subscription_manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelchi1997/subscription_manager/issues"
+  },
+  "homepage": "https://github.com/michaelchi1997/subscription_manager#readme",
+  "dependencies": {
+    "concurrently": "^3.6.1"
+  }
+}

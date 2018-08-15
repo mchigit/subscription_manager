@@ -9,11 +9,11 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    return queryInterface.addConstraint('Subscriptions', ['userId'], {
+    return queryInterface.addConstraint('subscriptions', ['user_id'], {
       type: 'foreign key',
       name: 'subscription_user_fkey',
       references: {
-        table: 'Users',
+        table: 'users',
         field: 'id'
       },
       onDelete: 'cascade'
@@ -28,6 +28,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    return queryInterface.removeConstraint('Subscriptions', 'subscription_user_fkey');
+    return queryInterface.removeConstraint('subscriptions', 'subscription_user_fkey');
   }
 };

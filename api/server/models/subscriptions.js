@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     cost: DataTypes.DOUBLE,
     frequency: DataTypes.ENUM("daily", "weekly", "monthly", "annually"),
     lastCharged: DataTypes.DATE
-  }, {});
+  }, {
+    timestamp: false
+  });
   Subscriptions.associate = function(models) {
     // associations can be defined here
     Subscriptions.belongsTo(models.User)

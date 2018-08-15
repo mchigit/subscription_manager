@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Subscriptions', {
+    return queryInterface.createTable('subscriptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,32 +9,37 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER
       },
       cost: {
+        allowNull: false,
         type: Sequelize.DOUBLE
       },
       frequency: {
+        allowNull: false,
         type: Sequelize.ENUM,
         values: ['daily', 'weekly', 'monthly', 'annually']
       },
-      lastCharged: {
+      last_charged: {
         type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Subscriptions');
+    return queryInterface.dropTable('subscriptions');
   }
 };

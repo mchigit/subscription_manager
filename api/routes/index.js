@@ -3,7 +3,7 @@ var router = express.Router();
 const SubscriptionModel = require('../models/subscriptionModel');
 const fs = require('fs');
 
-const databaseConfig = JSON.parse(fs.readFileSync('./api/config.json')).development;
+const databaseConfig = JSON.parse(fs.readFileSync('./api/config.json')).database.development;
 const subscriptionModel = new SubscriptionModel(databaseConfig);
 
 /* GET home page. */
@@ -20,7 +20,7 @@ router.post('/api/subscription', (req, res, next) => {
     lastCharged: req.body.lastCharged
   }
   subscriptionModel.addSubscriptions(data, (err, result) => {
-    if (err) return res.status(500).json({success: false, data: err});
+    if (err) return res.status(500).json({success: false, data: err.message});
     return res.json(result.rows);
   });
 });

@@ -27,11 +27,11 @@ module.exports = {
       last_charged: {
         type: Sequelize.DATE
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW')
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW')
       }

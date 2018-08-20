@@ -9,26 +9,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       first_name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       last_name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW
+        defaultValue: Sequelize.fn('NOW')
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW
+        defaultValue: Sequelize.fn('NOW')
       }
     });
   },

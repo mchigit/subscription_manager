@@ -1,12 +1,7 @@
-const fs = require('fs');
 const { Pool } = require('pg');
 const moment = require('moment');
 
-function getTimestampNow() {
-    return moment().format();
-}
-
-class SubscriptionModel {
+class AuthModel {
     constructor(connectionConfig) {
         this.pool = new Pool(connectionConfig);
         this.pool.on('error', (err, client) => {
@@ -15,14 +10,13 @@ class SubscriptionModel {
         })
     }
 
-    addSubscriptions(data, callback) {
-        const query = `INSERT into Subscriptions(name, user_id, cost, frequency, last_charged, "createdAt", "updatedAt")
-                        VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+    registerUser(data, callback) {
+        const query = `INSERT INTO Users(email, first_name, last_name, password) 
+                        VALUES ($1, $2, $3, $4)`;
         this.pool.connect((err, client, done) => {
             if (err) return callback(err);
-            client.query(query, [data.name, data.userId, data.cost, data.frequency, data.lastCharged, getTimestampNow(), getTimestampNow()], (err, result) => {
+            client.query(query, [data.email, data.firstName, data.lastName, data.hashedPassword], (err, result) => {
                 done();
-
                 if (err) {
                     return callback(err);
                 } else {
@@ -32,12 +26,9 @@ class SubscriptionModel {
         });
     }
 
-    getSubscriptions(userId) {
-        pool.connect((err, client, done) => {
-
-        });
+    getUser(data, callback) {
+        
     }
-
 }
 
-module.exports = SubscriptionModel;
+module.exports = AuthModel;

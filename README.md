@@ -23,6 +23,10 @@ You can go to each directory and run `npm install` or go to the root directory a
 
 ## Setting up database
 
+Manually Create 2 databases in PostgreSQL Server: 
+- `sub_manager_dev`
+- `sub_manager_test`
+
 The project uses `SequelizeJs`, which will automatically create the database schema through migration. Modify `api/server/config.json` to set up connection to local PostgreSQL database. 
 
 After installing Sequelize CLI globally, run the following code under the `api` folder:

@@ -17,35 +17,22 @@ describe('SubscriptionModel Basic CRUD', function () {
     };
     const subscription1 = {};
 
-    /**
-     * @todo finish before function to create all database schema synchronously
-     *
-     */
     before(() => {
-        util.createTables((err, result) => {
-            if (err) {
-                throw new Error("Could not create database schema for testing");
-            } else {
-                if (result.success) {
-                    console.log(result.message);
-                }
-                authModel.registerUser(user1, (err, res) => {
-                    if (err) {
-                        throw new Error("Could not register a new user");
-                    }
-                });
-            }
-            
-        });
+        util.createEnum()
+            .then(util.createTableUser()
+            .then(util.createTableSub()))
+            .catch((err) => {
+                throw new Error(err.message);
+            });
     });
 
-    // after(() => {
-    //     util.dropAllTables((err) => {
-    //         if (err) {
-    //             throw new Error("Could not drop testing schema");
-    //         }
-    //     });
-    // });
+    after(() => {
+        util.dropAllTables()
+            .then()
+            .catch((err) => {
+                throw new Error(err.message);
+            });                
+    });
 
     it ('should test create subscriptions', () => {
         

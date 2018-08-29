@@ -17,9 +17,10 @@ class SubscriptionModel {
 
     addSubscriptions(data, callback) {
         const query = `INSERT into Subscriptions(name, user_id, cost, frequency, last_charged, created_at, updated_at)
-                        VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+                        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, name, user_id, cost, frequency, last_charged`;
         this.pool.connect((err, client, done) => {
             if (err) return callback(err);
+
             client.query(query, [data.name, data.userId, data.cost, data.frequency, data.lastCharged, getTimestampNow(), getTimestampNow()], (err, result) => {
                 done();
 
@@ -49,7 +50,8 @@ class SubscriptionModel {
     }
 
     updateSubscription(subId, newData, callback) {
-        const query = `UPDATE subscriptions SET cost = $1, frequency = $2, last_charged = $3, updated_at = $4 WHERE id = $5;`;
+        const query = `UPDATE subscriptions SET cost = $1, frequency = $2, last_charged = $3, updated_at = $4 WHERE id = $5
+                         RETURNING id, name, user_id, cost, frequency, last_charged;`;
         this.pool.connect((err, client, done) => {
             if (err) return callback(err);
             client.query(query, [newData.cost, newData.frequency, newData.lastCharged, getTimestampNow(), subId], (err, result) => {

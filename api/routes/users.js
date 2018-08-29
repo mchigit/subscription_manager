@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
 const AuthModel = require('../models/AuthModel');
-
-const fs = require('fs');
-const databaseConfig = JSON.parse(fs.readFileSync('./api/config.json')).database.development;
+const databaseConfig = require("../config.json");
 const authModel = new AuthModel(databaseConfig);
 
 /* GET users listing. */

@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 const SubscriptionModel = require('../models/subscriptionModel');
 const fs = require('fs');
-
-const databaseConfig = JSON.parse(fs.readFileSync('./api/config.json')).database.development;
+const databaseConfig = require("../config.json").database.development;
 const subscriptionModel = new SubscriptionModel(databaseConfig);
 
 /* GET home page. */

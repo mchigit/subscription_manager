@@ -67,7 +67,7 @@ class SubscriptionModel {
     }
 
     deleteSubscription(subId, callback) {
-        const query = `DELETE FROM subscriptions WHERE id = $1`;
+        const query = `DELETE FROM subscriptions WHERE id = $1 RETURNING id;`;
         this.pool.connect((err, client, done) => {
             if (err) return callback(err);
             client.query(query, [subId], (err, result) => {
@@ -81,7 +81,6 @@ class SubscriptionModel {
             });
         });
     }
-
 }
 
 module.exports = SubscriptionModel;

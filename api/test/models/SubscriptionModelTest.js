@@ -5,6 +5,7 @@ const assert = require('assert');
 const AuthModel = require('../../models/AuthModel');
 const databaseConfig = require('../../config.json').database.test;
 const async = require("async");
+const userId = 1;
 
 describe('SubscriptionModel Basic CRUD', function () {
     const util = new Util();
@@ -20,7 +21,7 @@ describe('SubscriptionModel Basic CRUD', function () {
         name: "testSub",
         cost: 10,
         frequency: "monthly",
-        userId: 1,
+        userId: userId,
         lastCharged: null
     };
 
@@ -58,9 +59,23 @@ describe('SubscriptionModel Basic CRUD', function () {
                 assert(false);
             } else {
                 const insertSub = result.rows[0];
-                expect(insertSub.name).to.equal("testSub");
-                expect(insertSub.cost).to.equal(10);
-                expect(insertSub.frequency).to.equal("monthly");
+                expect(insertSub.name).to.equal(subscription1.name);
+                expect(insertSub.cost).to.equal(subscription1.cost);
+                expect(insertSub.frequency).to.equal(subscription1.frequency);
+            }
+            done();
+        });
+    });
+
+    it ('should get subscription', (done) => {
+        subscriptionModel.getSubscriptions(userId, (err, result) => {
+            if (err) {
+                assert(false);
+            } else {
+                const subscription = result.rows[0];
+                expect(subscription.name).to.equal(subscription1.name);
+                expect(subscription.cost).to.equal(subscription1.cost);
+                expect(subscription.frequency).to.equal(subscription1.frequency);
             }
             done();
         });
@@ -89,6 +104,30 @@ describe('SubscriptionModel Basic CRUD', function () {
             }
             done();
         });
+    });
 
+    it ('should delete subscription', (done) => {
+        async.waterfall([
+            (callback) => {
+                subscriptionModel.getSubscriptions(subscription1.userId, (err, result) => {
+                    callback(err, result.rows[0].id);
+                });
+            }, (subId, callback) => {
+                subscriptionModel.deleteSubscription(subId, (err, result) => {
+                    callback(err, result.rows[0].id);
+                });
+            }, (subId, callback) => {
+                subscriptionModel.getSubscriptions(subId, (err, result) => {
+                    callback(err, result);
+                });
+            }
+        ], (err, result) => {
+            if (err) {
+                assert(false);
+            } else {
+                expect(result.rows.length).to.equal(0);
+            }
+            done();
+        });
     });
 });

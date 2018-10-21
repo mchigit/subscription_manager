@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+import { faGhost } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
+import SignUp from './components/SignUp.js';
+
+library.add(faGhost);
+library.add(faGlasses);
+library.add(faCheck);
 
 class App extends Component {
-  state = {users: []}
-
-  componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
-
   render() {
     return (
       <div className="App">
-        <h1>Users</h1>
-        {this.state.users.map(user =>
-          <div key={user.id}>{user.username}</div>
-        )}
+        <SignUp />
       </div>
     );
   }

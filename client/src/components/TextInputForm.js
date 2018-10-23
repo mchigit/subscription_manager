@@ -12,8 +12,16 @@ const Label = styled.p`
 
 const Form = styled.input`
     width: 450px;
-    height: 30px;
+    height: 35px;
     font-size: 20px;
+    border: 1px solid #8B4513;
+    border-radius: 20px;
+    padding: 0 15px;
+
+    &:focus{
+        border: 3px solid #8B4513;
+        outline-width: 0;
+    }
 `;
 
 

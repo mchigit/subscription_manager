@@ -11,6 +11,7 @@ import { faKey } from '@fortawesome/free-solid-svg-icons';
 
 import SignIn from './components/SignIn.js';
 import SignUp from './components/SignUp.js';
+import CurrentSubscriptions from './components/CurrentSubscriptions.js';
 
 library.add(faAddressBook);
 library.add(faGlasses);
@@ -38,7 +39,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-        activePage: 'signIn',
+        activePage: 'currentSubscriptions',
         timePassed: false
     };
 
@@ -68,6 +69,10 @@ class App extends Component {
         
         {this.state.activePage === 'signUp' ?
         <SignUp /> : null
+        }
+
+        {this.state.activePage === 'currentSubscriptions' ?
+        <CurrentSubscriptions /> : null
         }
       </div>
     );

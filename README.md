@@ -45,3 +45,7 @@ npm run start-dev
 
 or go to `api` and `client` and run `npm start` seperately
 
+
+## API Doc:
+
+https://docs.google.com/document/d/1yI5RrGUMfKycf3vmQb9ejyDSPMx87Ge6zOP2mw8-pHw/edit?usp=sharing

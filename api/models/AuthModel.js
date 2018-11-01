@@ -26,8 +26,19 @@ class AuthModel {
         });
     }
 
-    getUser(data, callback) {
-        
+    getUser(email, callback) {
+        const query = `SELECT * from Users WHERE email = $1`;
+        this.pool.connect((err, client, done) => {
+            if (err) return callback(err);
+            client.query(query, [email], (err, result) => {
+                done();
+                if (err) {
+                    return callback(err);
+                } else {
+                    return callback(null, result);
+                }
+            });
+        })
     }
 }
 

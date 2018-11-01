@@ -24,17 +24,30 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/register', (req, res, next) => {
-  const hashedPassword = bcrypt.hashSync(req.body.password, 8);
-  const dbData = {
-    email: req.body.email,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    hashedPassword: hashedPassword
-  }
-  authModel.registerUser(dbData, (err, result) => {
-    if (err) return res.status(500).json({success: false, data: err.message})
-    return res.json(result.rows);
-  });
+  bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    const dbData = {
+      email: req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      hashedPassword: hashedPassword
+    }
+    authModel.registerUser(dbData, (err, result) => {
+      if (err) return res.status(500).json({success: false, data: err.message});
+      return res.json(result.rows);
+    });
+  })
+});
+
+router.post('/login', (req, res, next) => {
+  const password = req.body.password;
+  const email = req.body.email;
+  authModel.getUser(email, (err, result) => {
+    if (err) {
+      return res.status(500).json({success: false, data: err.message});
+    } else {
+      
+    }
+  })
 
 });
 

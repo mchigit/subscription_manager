@@ -1,56 +1,16 @@
 var express = require('express');
 var router = express.Router();
-const SubscriptionModel = require('../models/subscriptionModel');
-const fs = require('fs');
-const databaseConfig = require("../config.json").database[process.env.NODE_ENV || "development"];
-const subscriptionModel = new SubscriptionModel(databaseConfig);
+const AuthController = require('../controllers/AuthController');
+const authController = new AuthController();
+const SubscriptionController = require('../controllers/SubscriptionController');
+const subController = new SubscriptionController();
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-	res.render('index', { title: 'Express' });
-});
+router.post('/subscription', authController.checkForToken, subController.addSubscription);
 
-router.post('/subscription', (req, res, next) => {
-	const data = {
-		name: req.body.name,
-		userId: req.body.userId,
-		cost: req.body.cost,
-		frequency: req.body.frequency,
-		lastCharged: req.body.lastCharged
-	}
-	subscriptionModel.addSubscriptions(data, (err, result) => {
-		if (err) return res.status(500).json({ success: false, data: err.message });
-		return res.json(result.rows);
-	});
-});
+router.get('/subscriptions/:userId', authController.checkForToken, subController.getSubscription);
 
-router.get('/subscriptions/:userId', (req, res, next) => {
-	const userId = req.params.userId;
-	subscriptionModel.getSubscriptions(userId, (err, result) => {
-		if (err) return res.status(500).json({ success: false, data: err.message });
-		return res.json(result.rows);
-	});
-});
+router.put('/subscriptions/:subId', authController.checkForToken, subController.updateSubscription);
 
-router.put('/subscriptions/:subId', (req, res, next) => {
-	const subId = req.params.subId;
-	const newData = {
-		cost: req.body.cost,
-		frequency: req.body.frequency,
-		lastCharged: req.body.lastCharged
-	}
-	subscriptionModel.updateSubscription(subId, newData, (err, result) => {
-		if (err) return res.status(500).json({ success: false, data: err.message });
-		return res.json(result.rows);
-	})
-});
-
-router.delete('/subscriptions/:subId', (req, res, next) => {
-	const subId = req.params.subId;
-	subscriptionModel.deleteSubscription(subId, (err, result) => {
-		if (err) return res.status(500).json({ success: false, data: err.message });
-		return res.json(result.rows);
-	})
-});
+router.delete('/subscriptions/:subId', authController.checkForToken, subController.deleteSubscription);
 
 module.exports = router;

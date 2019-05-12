@@ -12,6 +12,7 @@ import { faKey } from '@fortawesome/free-solid-svg-icons';
 import SignIn from './components/SignIn.js';
 import SignUp from './components/SignUp.js';
 import CurrentSubscriptions from './components/CurrentSubscriptions.js';
+import OpenSubscriptionItem from './components/OpenSubscriptionItem.js';
 
 library.add(faAddressBook);
 library.add(faGlasses);
@@ -39,7 +40,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-        activePage: 'currentSubscriptions',
+        activePage: 'openSubscriptionItem',
         timePassed: false
     };
 
@@ -59,6 +60,12 @@ class App extends Component {
     })
   }
 
+  createNewSub(){
+    this.setState({
+      activePage: 'createNewSub'
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -73,6 +80,10 @@ class App extends Component {
 
         {this.state.activePage === 'currentSubscriptions' ?
         <CurrentSubscriptions /> : null
+        }
+
+        {this.state.activePage === 'openSubscriptionItem' ?
+        <OpenSubscriptionItem /> : null
         }
       </div>
     );

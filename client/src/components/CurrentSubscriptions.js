@@ -17,7 +17,7 @@ const Container = styled.div`
     margin-left: -600px;
     height: 100%;
     z-index: 15;
-    opacity: 0.9;
+    opacity: 1;
     overflow: scroll;
     margin-bottom: 200px;
 `;
@@ -25,6 +25,12 @@ const Container = styled.div`
 const Title = styled.div`
     text-align: center;
     margin-top: 100px;
+`;
+
+const CreateNew = styled.div`
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
 `;
 
 const Subscriptions = styled.div`
@@ -52,6 +58,9 @@ class CurrentSubscriptions extends Component {
                     <Title>
                         <h1>Current Subscriptions</h1>
                     </Title>
+                    <CreateNew>
+                        Add New Subscriptions
+                    </CreateNew>
                     <Subscriptions>
                     {_.map(allData, function(data, index){
                         var color = index%2 == 0 ? "#B87155" : "#df9f9f";
